@@ -20,10 +20,17 @@ namespace AdvancedConnectPlugin.Tools
         public static void Start(String path, String arguments)
         {
             using (Process process = new Process()) {
+                if (arguments.EndsWith("dos"))
+                {
+                    arguments = arguments.Remove(arguments.Length - 3).Trim();
+                }
+                else
+                {
+                    process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                    process.StartInfo.CreateNoWindow = true;
+                }
                 process.StartInfo.FileName = path;
                 process.StartInfo.Arguments = arguments;
-                process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                process.StartInfo.CreateNoWindow = true;
                 process.StartInfo.UseShellExecute = false;
                 process.Start();
             }
